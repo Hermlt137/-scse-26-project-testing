@@ -1,5 +1,5 @@
 {
-  "strategy": "Direct Navigation with Obstacle Avoidance",
+  "strategy": "direct navigation",
   "decisions": [
     "IF goal is ahead AND ahead is safe THEN FORWARD",
     "IF goal is left AND left is safe THEN LEFT",

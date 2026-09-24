@@ -12,3 +12,12 @@ def decide_action(goal_ahead, goal_on_left, goal_on_right, front_blocked, left_b
     if not right_blocked:
         return "RIGHT"
     return "STOP"
+
+def decide_next_move(state):
+    goal_ahead = state["goal_ahead"]
+    goal_on_left = state["goal_on_left"]
+    goal_on_right = state["goal_on_right"]
+    front_blocked = state["front_blocked"]
+    left_blocked = state["left_blocked"]
+    right_blocked = state["right_blocked"]
+    return decide_action(goal_ahead, goal_on_left, goal_on_right, front_blocked, left_blocked, right_blocked)

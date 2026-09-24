@@ -3,15 +3,8 @@ import json
 
 from llm import ask_qwen, clean_response
 
-REQUIRED_FUNCTION = "decide_action"
-REQUIRED_PARAMETER_NAMES = [
-    "goal_ahead",
-    "goal_on_left",
-    "goal_on_right",
-    "front_blocked",
-    "left_blocked",
-    "right_blocked",
-]
+REQUIRED_FUNCTION = "decide_next_move"
+REQUIRED_PARAMETER_NAMES = ["state"]
 
 SYSTEM_PROMPT = """You are the Developer Agent, a Python developer for a mobile robot navigation system.
 
@@ -19,10 +12,10 @@ Your only job is to read the validated navigation plan produced by the Planner A
 
 Rules you must follow:
 - Write pure Python code that uses only the standard library.
-- Define a function named decide_action(goal_ahead, goal_on_left, goal_on_right, front_blocked, left_blocked, right_blocked).
-- All six parameters are booleans: goal_ahead, goal_on_left and goal_on_right tell whether the goal is in that direction; front_blocked, left_blocked and right_blocked tell whether that direction is blocked.
-- The function must return exactly one of these strings: "FORWARD", "LEFT", "RIGHT", "STOP".
-- The function must apply this exact decision order:
+- Keep the original navigation logic in a helper function named decide_action(goal_ahead, goal_on_left, goal_on_right, front_blocked, left_blocked, right_blocked).
+- All six decide_action parameters are booleans: goal_ahead, goal_on_left and goal_on_right tell whether the goal is in that direction; front_blocked, left_blocked and right_blocked tell whether that direction is blocked.
+- decide_action must return exactly one of these strings: "FORWARD", "LEFT", "RIGHT", "STOP".
+- decide_action must apply this exact decision order:
   1. If the goal is ahead and the front is not blocked, return "FORWARD".
   2. If the goal is on the left and the left is not blocked, return "LEFT".
   3. If the goal is on the right and the right is not blocked, return "RIGHT".
@@ -30,8 +23,10 @@ Rules you must follow:
   5. If the left is not blocked, return "LEFT".
   6. If the right is not blocked, return "RIGHT".
   7. Return "STOP" only when all three directions are blocked.
-- The function must never return a direction that is blocked.
-- The function must never return "STOP" while at least one direction is not blocked.
+- Also define a main function named decide_next_move(state). It is the only function that other programs will call.
+- "state" is a dictionary that contains the robot sensor values. It has exactly these boolean keys: "goal_ahead", "goal_on_left", "goal_on_right", "front_blocked", "left_blocked" and "right_blocked".
+- decide_next_move(state) must return the action for that state by using the decide_action logic.
+- decide_next_move must never return a direction that is blocked, and it must never return "STOP" while at least one direction is not blocked.
 - Return ONLY the Python code, with no markdown code fences, no explanations, and no text before or after the code."""
 
 

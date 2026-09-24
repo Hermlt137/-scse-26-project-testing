@@ -5,6 +5,7 @@ from file_io import read_json, write_text
 
 ARTIFACTS_DIR = "artifacts"
 PLAN_FILE = "plan.json"
+GENERATED_DIR = "generated"
 OUTPUT_FILE = "navigation_logic.py"
 
 
@@ -20,8 +21,9 @@ def main():
 
     print(code)
 
-    write_text(code, OUTPUT_FILE)
-    print(f"\nNavigation logic saved to {OUTPUT_FILE}")
+    output_file = Path(GENERATED_DIR) / OUTPUT_FILE
+    write_text(code, output_file)
+    print(f"\nNavigation logic saved to {output_file}")
 
 
 if __name__ == "__main__":

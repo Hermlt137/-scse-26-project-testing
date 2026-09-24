@@ -26,7 +26,7 @@
       "cwd": "${workspaceFolder}"
     },
     {
-      "name": "4. Run Developer (navigation_logic.py)",
+      "name": "4. Run Developer (generated/navigation_logic.py)",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}\\run_developer.py",
@@ -34,7 +34,31 @@
       "cwd": "${workspaceFolder}"
     },
     {
-      "name": "5. Run Tests (test_generated_navigation_logic.py)",
+      "name": "5. Test Analyst (test_analyst.py)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\test_analyst.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "6. Test Planner (test_planner.py)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\test_planner.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "7. Test Developer (test_developer.py)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\test_developer.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "8. Test Navigation Logic (test_generated_navigation_logic.py)",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}\\test_generated_navigation_logic.py",
