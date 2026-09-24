@@ -1,0 +1,45 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "1. Brief to Requirements (robot_requirements.txt)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\brief_to_req.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "2. Run Analyst (artifacts/requirements.json)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\run_analyst.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "3. Run Planner (artifacts/plan.json)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\run_planner.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "4. Run Developer (navigation_logic.py)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\run_developer.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "5. Run Tests (test_generated_navigation_logic.py)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\test_generated_navigation_logic.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

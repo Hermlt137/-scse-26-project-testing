@@ -1,0 +1,7 @@
+1. The robot must determine the direction to move based on the availability of unblocked paths and the location of its goal.  
+2. The robot must prioritize moving toward its goal whenever this can be done safely.  
+3. The robot must never move into a direction that is blocked.  
+4. If there is no safe direction available, the robot must stop.  
+5. The robot must receive input indicating whether the path in front, to the left, and to the right is blocked.  
+6. The robot must receive input indicating whether its goal is ahead, to the left, or to the right.  
+7. The navigation logic must be capable of operating in multiple simulated environments.
