@@ -1,11 +1,8 @@
 import ast
 import json
 
-from ollama import chat
+from llm import ask_qwen, clean_response
 
-MODEL = "qwen3:8b"
-
-VALID_ACTIONS = ["FORWARD", "LEFT", "RIGHT", "STOP"]
 REQUIRED_FUNCTION = "decide_action"
 REQUIRED_PARAMETER_NAMES = [
     "goal_ahead",
@@ -45,35 +42,6 @@ def build_prompt(plan):
 
 Write the Python navigation logic for this plan."""
     return system_prompt, user_prompt
-
-
-def ask_qwen(system_prompt, user_prompt):
-    response = chat(
-        model=MODEL,
-        messages=[
-            {
-                "role": "system",
-                "content": system_prompt,
-            },
-            {
-                "role": "user",
-                "content": user_prompt,
-            },
-        ],
-        think=False,
-    )
-    return response.message.content
-
-
-def clean_response(response_text):
-    text = response_text.strip()
-    if text.startswith("```"):
-        lines = text.splitlines()
-        lines = lines[1:]
-        if lines and lines[-1].strip().startswith("```"):
-            lines = lines[:-1]
-        text = "\n".join(lines).strip()
-    return text
 
 
 def validate_code(code):

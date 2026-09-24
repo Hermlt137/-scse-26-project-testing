@@ -1,8 +1,5 @@
-from pathlib import Path
-
-from ollama import chat
-
-MODEL = "qwen3:8b"
+from file_io import read_text, write_text
+from llm import ask_qwen
 
 BRIEF_FILE = "brief.txt"
 OUTPUT_FILE = "robot_requirements.txt"
@@ -18,11 +15,6 @@ Rules:
 - Return only the requirements text, with no extra commentary."""
 
 
-def read_brief(filename):
-    with open(filename, "r", encoding="utf-8") as file:
-        return file.read()
-
-
 def build_prompt(brief_text):
     system_prompt = SYSTEM_PROMPT
     user_prompt = f"""Brief:
@@ -32,37 +24,15 @@ Write the software requirements for this brief."""
     return system_prompt, user_prompt
 
 
-def ask_qwen(system_prompt, user_prompt):
-    response = chat(
-        model=MODEL,
-        messages=[
-            {
-                "role": "system",
-                "content": system_prompt,
-            },
-            {
-                "role": "user",
-                "content": user_prompt,
-            },
-        ],
-        think=False,
-    )
-    return response.message.content
-
-
-def save_output(text, filename):
-    Path(filename).write_text(text, encoding="utf-8")
-
-
 def main():
-    brief_text = read_brief(BRIEF_FILE)
+    brief_text = read_text(BRIEF_FILE)
 
     system_prompt, user_prompt = build_prompt(brief_text)
     requirements_text = ask_qwen(system_prompt, user_prompt)
 
     print(requirements_text)
 
-    save_output(requirements_text, OUTPUT_FILE)
+    write_text(requirements_text, OUTPUT_FILE)
     print(f"\nRequirements saved to {OUTPUT_FILE}")
 
 

@@ -1,8 +1,6 @@
 import json
 
-from ollama import chat
-
-MODEL = "qwen3:8b"
+from llm import ask_qwen, parse_json_response
 
 REQUIRED_KEYS = {"strategy", "decisions", "stop_condition"}
 VALID_ACTIONS = ["FORWARD", "LEFT", "RIGHT", "STOP"]
@@ -36,42 +34,6 @@ def build_prompt(requirement):
 
 Create the navigation plan for these requirements."""
     return system_prompt, user_prompt
-
-
-def ask_qwen(system_prompt, user_prompt):
-    response = chat(
-        model=MODEL,
-        messages=[
-            {
-                "role": "system",
-                "content": system_prompt,
-            },
-            {
-                "role": "user",
-                "content": user_prompt,
-            },
-        ],
-        think=False,
-    )
-    return response.message.content
-
-
-def clean_response(response_text):
-    text = response_text.strip()
-    if text.startswith("```"):
-        lines = text.splitlines()
-        lines = lines[1:]
-        if lines and lines[-1].strip().startswith("```"):
-            lines = lines[:-1]
-        text = "\n".join(lines).strip()
-    return text
-
-
-def parse_response(response_text):
-    try:
-        return json.loads(clean_response(response_text))
-    except json.JSONDecodeError:
-        return None
 
 
 def validate_plan(data):
@@ -115,7 +77,7 @@ def run_planner(requirement):
 
     response_text = ask_qwen(system_prompt, user_prompt)
 
-    plan = parse_response(response_text)
+    plan = parse_json_response(response_text)
 
     if plan is None:
         print("The Planner Agent did not return valid JSON.")
